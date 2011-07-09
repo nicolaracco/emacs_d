@@ -1,19 +1,22 @@
-(tool-bar-mode -1)
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
 
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 
 (require 'textmate)
 (require 'peepopen)
 (textmate-mode)
+
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-(add-to-list 'load-path "~/.emacs.d/vendor/color-theme-6.6.0")
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-solarized-light)))
+(if (window-system) 
+    (progn
+      (add-to-list 'load-path "~/.emacs.d/vendor/color-theme-6.6.0")
+      (require 'color-theme)
+      (eval-after-load "color-theme"
+	'(progn
+	   (color-theme-initialize)
+	   (color-theme-solarized-light)))))
 
 ;; sets the default font to menlo
 (defun fontify-frame (frame)
@@ -25,17 +28,9 @@
 (setq default-frame-alist '((width . 105) (height . 40) ))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(linum ((t (:inherit (shadow default) :family "Inconsolata")))))
 
 ;; normal scrolling (1 line)
@@ -84,3 +79,17 @@
 
 (require 'rvm)
 (rvm-use-default)
+
+(setq
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.emacs_backups"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)       ; use versioned backups
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
