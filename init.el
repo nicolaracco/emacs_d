@@ -1,22 +1,14 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
 
+;;
+;; This is the original stuff
+;;
+
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 
 (require 'textmate)
 (require 'peepopen)
 (textmate-mode)
-
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-
-(if (window-system) 
-    (progn
-      (add-to-list 'load-path "~/.emacs.d/vendor/color-theme-6.6.0")
-      (require 'color-theme)
-      (eval-after-load "color-theme"
-	'(progn
-	   (color-theme-initialize)
-	   (color-theme-solarized-light)))))
 
 ;; sets the default font to menlo
 (defun fontify-frame (frame)
@@ -33,20 +25,10 @@
 (custom-set-faces
  '(linum ((t (:inherit (shadow default) :family "Inconsolata")))))
 
-;; normal scrolling (1 line)
-(require 'smooth-scrolling)
-
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
 
-(add-to-list 'load-path "~/.emacs.d/vendor/twittering-mode")
-(require 'twittering-mode)
-(setq twittering-use-master-password t)
-
 (setq exec-path (cons "/usr/local/bin" exec-path))
-
-(add-to-list 'load-path "~/.emacs.d/vendor/git-emacs")
-(require 'git-emacs)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
@@ -61,14 +43,10 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-(require 'autopair)
-(autopair-global-mode)
-
 (autoload 'folding-mode          "folding" "Folding mode" t)
 (autoload 'turn-off-folding-mode "folding" "Folding mode" t)
 (autoload 'turn-on-folding-mode  "folding" "Folding mode" t)
 
-(require 'ruby-compilation)
 (setq auto-mode-alist  (cons '("Gemfile$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("Gemfile.lock$" . ruby-mode) auto-mode-alist))
 
@@ -93,3 +71,27 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+;; Here I start configuring it with el-get
+
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(require 'el-get)
+
+(setq el-get-sources 
+      '(magit
+	autopair
+	color-theme
+	color-theme-solarized
+	smooth-scrolling
+	twittering-mode
+	rainbow-mode
+	ruby-compilation
+	yaml-mode))
+
+(el-get 'sync el-get-sources)
+
+;; Various after-el-get-configurations
+(color-theme-solarized-light)
+(setq twittering-use-master-password t)
+(autopair-global-mode)
+(rainbow-mode)
