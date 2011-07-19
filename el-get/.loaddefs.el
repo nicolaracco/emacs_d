@@ -166,6 +166,66 @@ Initialize the color theme package by loading color-theme-libraries.
 
 ;;;***
 
+;;;### (autoloads (gist-fetch gist-list gist-region-or-buffer-private
+;;;;;;  gist-region-or-buffer gist-buffer-private gist-buffer gist-region-private
+;;;;;;  gist-region) "gist/gist" "gist/gist.el" (19996 4473))
+;;; Generated autoloads from gist/gist.el
+
+(autoload 'gist-region "gist/gist" "\
+Post the current region as a new paste at gist.github.com
+Copies the URL into the kill ring.
+
+With a prefix argument, makes a private paste.
+
+\(fn BEGIN END &optional PRIVATE &optional CALLBACK)" t nil)
+
+(autoload 'gist-region-private "gist/gist" "\
+Post the current region as a new private paste at gist.github.com
+Copies the URL into the kill ring.
+
+\(fn BEGIN END)" t nil)
+
+(autoload 'gist-buffer "gist/gist" "\
+Post the current buffer as a new paste at gist.github.com.
+Copies the URL into the kill ring.
+
+With a prefix argument, makes a private paste.
+
+\(fn &optional PRIVATE)" t nil)
+
+(autoload 'gist-buffer-private "gist/gist" "\
+Post the current buffer as a new private paste at gist.github.com.
+Copies the URL into the kill ring.
+
+\(fn)" t nil)
+
+(autoload 'gist-region-or-buffer "gist/gist" "\
+Post either the current region, or if mark is not set, the current buffer as a new paste at gist.github.com
+Copies the URL into the kill ring.
+
+With a prefix argument, makes a private paste.
+
+\(fn &optional PRIVATE)" t nil)
+
+(autoload 'gist-region-or-buffer-private "gist/gist" "\
+Post either the current region, or if mark is not set, the current buffer as a new private paste at gist.github.com
+Copies the URL into the kill ring.
+
+\(fn)" t nil)
+
+(autoload 'gist-list "gist/gist" "\
+Displays a list of all of the current user's gists in a new buffer.
+
+\(fn)" t nil)
+
+(autoload 'gist-fetch "gist/gist" "\
+Fetches a Gist and inserts it into a new buffer
+If the Gist already exists in a buffer, switches to it
+
+\(fn ID)" t nil)
+
+;;;***
+
 ;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (19995
 ;;;;;;  6463))
 ;;; Generated autoloads from magit/magit.el
@@ -195,6 +255,235 @@ running 'man git-rebase' at the command line) for details.
 
 ;;;***
 
+;;;### (autoloads (nxhtml-byte-recompile-file nxhtml-byte-compile-file
+;;;;;;  nxhtml-get-missing-files nxhtml-update-existing-files nxhtml-setup-download-all
+;;;;;;  nxhtml-setup-auto-download nxhtml-setup-install) "nxhtml/nxhtml-web-vcs"
+;;;;;;  "nxhtml/nxhtml-web-vcs.el" (20005 13381))
+;;; Generated autoloads from nxhtml/nxhtml-web-vcs.el
+
+(autoload 'nxhtml-setup-install "nxhtml/nxhtml-web-vcs" "\
+Setup and start nXhtml installation.
+
+This is for installation and updating directly from the nXhtml
+development sources.
+
+There are two different ways to install:
+
+  (1) Download all at once: `nxhtml-setup-download-all'
+  (2) Automatically download part by part: `nxhtml-setup-auto-download'
+
+You can convert between those ways by calling this function again.
+You can also do this by setting the option `nxhtml-autoload-web' yourself.
+
+When you have nXhtml installed you can update it:
+
+  (3) Update new files in nXhtml: `nxhtml-update-existing-files'
+
+To learn more about nXhtml visit its home page at URL
+`http://www.emacswiki.com/NxhtmlMode/'.
+
+If you want to test auto download (but not use it further) there
+is a special function for that, you answer T here:
+
+   (T) Test automatic download part by part: `nxhtml-setup-test-auto-download'
+
+======
+*Note*
+If you want to download a zip file with latest released version instead then
+please see URL `http://ourcomments.org/Emacs/nXhtml/doc/nxhtml.html'.
+
+\(fn WAY)" t nil)
+
+(autoload 'nxhtml-setup-auto-download "nxhtml/nxhtml-web-vcs" "\
+Set up to autoload nXhtml files from the web.
+
+This function will download some initial files and then setup to
+download the rest when you need them.
+
+Files will be downloaded under the directory root you specify in
+DL-DIR.
+
+Note that files will not be upgraded automatically.  The auto
+downloading is just for files you are missing. (This may change a
+bit in the future.) If you want to upgrade those files that you
+have downloaded you can just call `nxhtml-update-existing-files'.
+
+You can easily switch between this mode of downloading or
+downloading the whole of nXhtml by once.  To switch just call the
+command `nxhtml-setup-install'.
+
+See also the command `nxhtml-setup-download-all'.
+
+Note: If your nXhtml is to old you can't use this function
+      directly.  You have to upgrade first, se the function
+      above. Version 2.07 or above is good for this.
+
+\(fn DL-DIR)" t nil)
+
+(autoload 'nxhtml-setup-download-all "nxhtml/nxhtml-web-vcs" "\
+Download or update all of nXhtml.
+
+You can download all if nXhtml with this command.
+
+To update existing files use `nxhtml-update-existing-files'.
+
+If you want to download only those files you are actually using
+then call `nxhtml-setup-auto-download' instead.
+
+See the command `nxhtml-setup-install' for a convenient way to
+call these commands.
+
+For more information about auto download of nXhtml files see
+`nxhtml-setup-auto-download'.
+
+\(fn DL-DIR)" t nil)
+
+(autoload 'nxhtml-update-existing-files "nxhtml/nxhtml-web-vcs" "\
+Update existing nXhtml files from the development sources.
+Only files you already have will be updated.
+
+Note that this works both if you have setup nXhtml to auto
+download files as you need them or if you have downloaded all of
+nXhtml at once.
+
+For more information about installing and updating nXhtml see the
+command `nxhtml-setup-install'.
+
+\(fn)" t nil)
+
+(autoload 'nxhtml-get-missing-files "nxhtml/nxhtml-web-vcs" "\
+Download to SUB-DIR missing files matching FILE-NAME-LIST.
+If FILE-NAME-LIST is nil download all missing files.
+If it is a list download all missing files in the list.
+If it is a regexp download all missing matching files.
+
+\(fn SUB-DIR FILE-NAME-LIST)" nil nil)
+
+(autoload 'nxhtml-byte-compile-file "nxhtml/nxhtml-web-vcs" "\
+
+
+\(fn FILE &optional LOAD)" nil nil)
+
+(autoload 'nxhtml-byte-recompile-file "nxhtml/nxhtml-web-vcs" "\
+Byte recompile FILE file if necessary.
+For more information see `nxhtml-byte-compile-file'.
+Loading is done if recompiled and LOAD is t.
+
+\(fn FILE &optional LOAD)" t nil)
+
+;;;***
+
+;;;### (autoloads (nxhtmlmaint-byte-uncompile-all nxhtmlmaint-byte-recompile
+;;;;;;  nxhtmlmaint-start-byte-compilation) "nxhtml/nxhtmlmaint"
+;;;;;;  "nxhtml/nxhtmlmaint.el" (20005 13381))
+;;; Generated autoloads from nxhtml/nxhtmlmaint.el
+
+(autoload 'nxhtmlmaint-start-byte-compilation "nxhtml/nxhtmlmaint" "\
+Start byte compilation of nXhtml in new Emacs instance.
+Byte compiling in general makes elisp code run 5-10 times faster
+which is quite noticeable when you use nXhtml.
+
+This will also update the file nxhtml-loaddefs.el.
+
+You must restart Emacs to use the byte compiled files.
+
+If for some reason the byte compiled files does not work you can
+remove then with `nxhtmlmaint-byte-uncompile-all'.
+
+See also `nxhtmlmaint-byte-recompile'
+
+\(fn)" t nil)
+
+(autoload 'nxhtmlmaint-byte-recompile "nxhtml/nxhtmlmaint" "\
+Recompile or compile all nXhtml files in current Emacs.
+Byte compile all elisp libraries whose .el files are newer their
+.elc files.
+
+\(fn)" t nil)
+
+(autoload 'nxhtmlmaint-byte-uncompile-all "nxhtml/nxhtmlmaint" "\
+Delete byte compiled files in nXhtml.
+This will also update the file nxhtml-loaddefs.el.
+
+See `nxhtmlmaint-start-byte-compilation' for byte compiling.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (web-vcs-investigate-elisp-file web-vcs-url-copy-file
+;;;;;;  web-vcs-url-retrieve-synch web-vcs-byte-compile-file web-vcs-message-with-face
+;;;;;;  web-vcs-get-files-from-root web-vcs-log-edit web-vcs-default-download-directory)
+;;;;;;  "nxhtml/web-vcs" "nxhtml/web-vcs.el" (20005 13381))
+;;; Generated autoloads from nxhtml/web-vcs.el
+
+(autoload 'web-vcs-default-download-directory "nxhtml/web-vcs" "\
+Try to find a suitable place.
+Use the choice in `web-vcs-default-download-directory'.
+If this does not fit fall back to \"~/.emacs.d/\".
+
+\(fn)" nil nil)
+
+(autoload 'web-vcs-log-edit "nxhtml/web-vcs" "\
+Open log file.
+
+\(fn)" t nil)
+
+(autoload 'web-vcs-get-files-from-root "nxhtml/web-vcs" "\
+Download a file tree from VCS system using the web interface.
+Use WEB-VCS entry in variable `web-vcs-links-regexp' to download
+files via http from FULL-URL to directory DL-DIR.
+
+Show FULL-URL first and offer to visit the page.  That page will
+give you information about version control system (VCS) system
+used etc.
+
+\(fn WEB-VCS FULL-URL DL-DIR)" nil nil)
+
+(autoload 'web-vcs-message-with-face "nxhtml/web-vcs" "\
+Display a colored message at the bottom of the string.
+FACE is the face to use for the message.
+FORMAT-STRING and ARGS are the same as for `message'.
+
+Also put FACE on the message in *Messages* buffer.
+
+\(fn FACE FORMAT-STRING &rest ARGS)" nil nil)
+
+(autoload 'web-vcs-byte-compile-file "nxhtml/web-vcs" "\
+Byte compile FILE in a new Emacs sub process.
+EXTRA-LOAD-PATH is added to the front of `load-path' during
+compilation.
+
+FILE is set to `buffer-file-name' when called interactively.
+If LOAD
+
+\(fn FILE &optional LOAD EXTRA-LOAD-PATH COMP-DIR)" t nil)
+
+(autoload 'web-vcs-url-retrieve-synch "nxhtml/web-vcs" "\
+Retrieve URL, return cons with buffer and http status.
+
+\(fn URL)" nil nil)
+
+(autoload 'web-vcs-url-copy-file "nxhtml/web-vcs" "\
+Copy URL to NEWNAME.  Both args must be strings.
+Signals a `file-already-exists' error if file NEWNAME already exists,
+unless a third argument OK-IF-ALREADY-EXISTS is supplied and non-nil.
+A number as third arg means request confirmation if NEWNAME already exists.
+This is what happens in interactive use with M-x.
+Fourth arg KEEP-TIME non-nil means give the new file the same
+last-modified time as the old one.  (This works on only some systems.)
+Fifth arg PRESERVE-UID-GID is ignored.
+A prefix arg makes KEEP-TIME non-nil.
+
+\(fn URL NEWNAME &optional OK-IF-ALREADY-EXISTS KEEP-TIME PRESERVE-UID-GID)" nil nil)
+
+(autoload 'web-vcs-investigate-elisp-file "nxhtml/web-vcs" "\
+
+
+\(fn FILE-OR-BUFFER)" t nil)
+
+;;;***
+
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
 ;;;;;;  (19995 7135))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
@@ -202,6 +491,26 @@ running 'man git-rebase' at the command line) for details.
 (autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
 Colorize strings that represent colors.
 This will fontify with colors the string like \"#aabbcc\" or \"blue\".
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (textmate-mode) "textmate/textmate" "textmate/textmate.el"
+;;;;;;  (19996 4138))
+;;; Generated autoloads from textmate/textmate.el
+
+(defvar textmate-mode nil "\
+Non-nil if Textmate mode is enabled.
+See the command `textmate-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `textmate-mode'.")
+
+(custom-autoload 'textmate-mode "textmate/textmate" nil)
+
+(autoload 'textmate-mode "textmate/textmate" "\
+TextMate Emulation Minor Mode
 
 \(fn &optional ARG)" t nil)
 
@@ -218,14 +527,57 @@ Start twittering-mode.
 
 ;;;***
 
+;;;### (autoloads (yas/minor-mode yas/snippet-dirs) "yasnippet/yasnippet"
+;;;;;;  "yasnippet/yasnippet.el" (20005 12322))
+;;; Generated autoloads from yasnippet/yasnippet.el
+
+(defvar yas/snippet-dirs nil "\
+Directory or list of snippet dirs for each major mode.
+
+The directory where user-created snippets are to be stored. Can
+also be a list of directories. In that case, when used for
+bulk (re)loading of snippets (at startup or via
+`yas/reload-all'), directories appearing earlier in the list
+shadow other dir's snippets. Also, the first directory is taken
+as the default for storing the user's new snippets.")
+
+(custom-autoload 'yas/snippet-dirs "yasnippet/yasnippet" nil)
+
+(autoload 'yas/minor-mode "yasnippet/yasnippet" "\
+Toggle YASnippet mode.
+
+When YASnippet mode is enabled, the `tas/trigger-key' key expands
+snippets of code depending on the mode.
+
+With no argument, this command toggles the mode.
+positive prefix argument turns on the mode.
+Negative prefix argument turns off the mode.
+
+You can customize the key through `yas/trigger-key'.
+
+Key bindings:
+\\{yas/minor-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil nil ("autopair/autopair.el" "color-theme-solarized/solarized-dark-theme.el"
 ;;;;;;  "color-theme-solarized/solarized-definitions.el" "color-theme-solarized/solarized-light-theme.el"
 ;;;;;;  "color-theme/color-theme-autoloads.el" "el-get/el-get-install.el"
 ;;;;;;  "el-get/el-get.el" "magit/50magit.el" "magit/magit-bisect.el"
 ;;;;;;  "magit/magit-key-mode.el" "magit/magit-pkg.el" "magit/magit-stgit.el"
-;;;;;;  "magit/magit-svn.el" "magit/magit-topgit.el" "smooth-scrolling/smooth-scrolling.el"
-;;;;;;  "twittering-mode/test.el" "yaml-mode/yaml-mode.el") (19995
-;;;;;;  7136 344007))
+;;;;;;  "magit/magit-svn.el" "magit/magit-topgit.el" "mmm-mode/mmm-auto.el"
+;;;;;;  "mmm-mode/mmm-class.el" "mmm-mode/mmm-cmds.el" "mmm-mode/mmm-compat.el"
+;;;;;;  "mmm-mode/mmm-cweb.el" "mmm-mode/mmm-mason.el" "mmm-mode/mmm-mode.el"
+;;;;;;  "mmm-mode/mmm-myghty.el" "mmm-mode/mmm-noweb.el" "mmm-mode/mmm-region.el"
+;;;;;;  "mmm-mode/mmm-rpm.el" "mmm-mode/mmm-sample.el" "mmm-mode/mmm-univ.el"
+;;;;;;  "mmm-mode/mmm-utils.el" "mmm-mode/mmm-vars.el" "nxhtml/autostart.el"
+;;;;;;  "nxhtml/autostart22.el" "nxhtml/nxhtml-base.el" "nxhtml/nxhtml-loaddefs.el"
+;;;;;;  "nxhtml/web-autoload.el" "package/package.el" "ruby-compilation/ruby-compilation.el"
+;;;;;;  "smooth-scrolling/smooth-scrolling.el" "twittering-mode/test.el"
+;;;;;;  "yaml-mode/yaml-mode.el" "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el")
+;;;;;;  (20005 28814 461852))
 
 ;;;***
 

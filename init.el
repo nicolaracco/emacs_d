@@ -1,3 +1,4 @@
+;; Before everything else, keep it real
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
 
 ;;
@@ -5,10 +6,6 @@
 ;;
 
 (add-to-list 'load-path "~/.emacs.d/vendor/")
-
-(require 'textmate)
-(require 'peepopen)
-(textmate-mode)
 
 ;; sets the default font to menlo
 (defun fontify-frame (frame)
@@ -49,6 +46,7 @@
 
 (setq auto-mode-alist  (cons '("Gemfile$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("Gemfile.lock$" . ruby-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
@@ -77,16 +75,35 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
 
-(setq el-get-sources 
-      '(magit
-	autopair
-	color-theme
-	color-theme-solarized
-	smooth-scrolling
-	twittering-mode
-	rainbow-mode
-	ruby-compilation
-	yaml-mode))
+;; MOAR PACKAGES
+;; Add the original Emacs Lisp Package Archive
+(add-to-list 'package-archives
+             '("elpa" . "http://tromey.com/elpa/"))
+;; Add the user-contributed repository
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(setq inf-ruby-source
+      '((:name inf-ruby
+	      :type elpa)))
+
+(setq el-get-sources
+      (append
+       '(magit
+	 autopair
+	 color-theme
+	 color-theme-solarized
+	 gist
+	 nxhtml
+	 org-mode
+	 smooth-scrolling
+	 twittering-mode
+	 rainbow-mode
+	 ruby-compilation
+	 textmate
+	 yasnippet
+	 yaml-mode)
+       (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync el-get-sources)
 
@@ -95,3 +112,15 @@
 (setq twittering-use-master-password t)
 (autopair-global-mode)
 (rainbow-mode)
+(yas/global-mode)
+(setq
+ nxhtml-global-minor-mode t
+ mumamo-chunk-coloring 'submode-colored
+ nxhtml-skip-welcome t
+ indent-region-mode t
+ rng-nxml-auto-validate-flag nil
+ nxml-degraded t)
+(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+;; hack until I can make it work via el-get
+(require 'peepopen)
