@@ -5,10 +5,10 @@
 ;; This is the original stuff
 ;;
 
-;; this is so important that it goes here
-(setq indent-tabs-mode nil)
-
 (add-to-list 'load-path "~/.emacs.d/vendor/")
+
+;; this is so important that it goes here
+(setq-default indent-tabs-mode nil)
 
 ;; sets the default font to menlo
 (defun fontify-frame (frame)
@@ -23,7 +23,7 @@
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil))
 (custom-set-faces
- '(linum ((t (:inherit (shadow default) :family "Inconsolata")))))
+ '(linum ((t (:family "Inconsolata")))))
 
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
@@ -37,28 +37,11 @@
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
-(autoload 'apache-mode "apache-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
-(add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
-(add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
-(add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
-(add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
-
-(autoload 'folding-mode          "folding" "Folding mode" t)
-(autoload 'turn-off-folding-mode "folding" "Folding mode" t)
-(autoload 'turn-on-folding-mode  "folding" "Folding mode" t)
-
 (setq auto-mode-alist  (cons '("Gemfile$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("Gemfile.lock$" . ruby-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
-
-(require 'linum-off)
-(global-linum-mode 1)
-
-(require 'rvm)
-(rvm-use-default)
 
 (setq
  backup-by-copying t      ; don't clobber symlinks
@@ -77,7 +60,6 @@
 ;; hack until I can make it work via el-get
 (require 'peepopen)
 
-
 ;; Here I start configuring it with el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
@@ -91,26 +73,38 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (setq el-get-sources
-      '((:name inf-ruby
+      '((:name apache-mode
+               :type git
+               :url "https://github.com/emacsmirror/apache-mode.git")
+        (:name inf-ruby
+               :features inf-ruby
 	       :type elpa)
-	(:name textmate
+        (:name linum-off
+               :type git
+               :url "https://github.com/emacsmirror/linum-off.git"
+               :features linum-off
+               :post-init (lambda() (global-linum-mode 1)))
+        (:name textmate
 	       :type git
 	       :url "https://github.com/defunkt/textmate.el.git"
-	       :features textmate
-	       :after (lambda () (textmate-mode)))))
+               :features textmate
+	       :post-init (lambda () (textmate-mode)))))
 
 (setq el-get-packages
       (append
        '(magit
+         apache-mode
 	 autopair
 	 color-theme
 	 color-theme-solarized
+         folding
 	 gist
 	 nxhtml
 	 org-mode
 	 smooth-scrolling
 	 twittering-mode
 	 rainbow-mode
+         rvm
 	 ruby-compilation
 	 yasnippet
 	 yaml-mode)
@@ -119,11 +113,19 @@
 (el-get 'sync el-get-packages)
 
 ;; Various after-el-get-configurations
+(show-paren-mode 1)
 (color-theme-solarized-light)
 (setq twittering-use-master-password t)
 (autopair-global-mode)
 (rainbow-mode)
 (yas/global-mode)
+(rvm-use-default)
+(add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
+(add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
+(add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
+(add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
+(add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
+
 ;; complicated stuff for erb files
 (setq
  nxhtml-global-minor-mode t
