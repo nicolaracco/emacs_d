@@ -70,8 +70,11 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; Here I start configuring it with el-get
+;; hack until I can make it work via el-get
+(require 'peepopen)
 
+
+;; Here I start configuring it with el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
 
@@ -85,7 +88,7 @@
 
 (setq el-get-sources
       '((:name inf-ruby
-	      :type elpa)
+	       :type elpa)
 	(:name textmate
 	       :type git
 	       :url "https://github.com/defunkt/textmate.el.git"
@@ -117,6 +120,7 @@
 (autopair-global-mode)
 (rainbow-mode)
 (yas/global-mode)
+;; complicated stuff for erb files
 (setq
  nxhtml-global-minor-mode t
  mumamo-chunk-coloring 'submode-colored
@@ -126,5 +130,3 @@
  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
-;; hack until I can make it work via el-get
-(require 'peepopen)
