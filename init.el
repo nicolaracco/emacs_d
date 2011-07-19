@@ -83,11 +83,16 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
-(setq inf-ruby-source
-      '((:name inf-ruby
-	      :type elpa)))
-
 (setq el-get-sources
+      '((:name inf-ruby
+	      :type elpa)
+	(:name textmate
+	       :type git
+	       :url "https://github.com/defunkt/textmate.el.git"
+	       :features textmate
+	       :after (lambda () (textmate-mode)))))
+
+(setq el-get-packages
       (append
        '(magit
 	 autopair
@@ -100,12 +105,11 @@
 	 twittering-mode
 	 rainbow-mode
 	 ruby-compilation
-	 textmate
 	 yasnippet
 	 yaml-mode)
        (mapcar 'el-get-source-name el-get-sources)))
 
-(el-get 'sync el-get-sources)
+(el-get 'sync el-get-packages)
 
 ;; Various after-el-get-configurations
 (color-theme-solarized-light)
