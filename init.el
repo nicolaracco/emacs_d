@@ -5,6 +5,9 @@
 ;; This is the original stuff
 ;;
 
+;; this is so important that it goes here
+(setq indent-tabs-mode nil)
+
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 
 ;; sets the default font to menlo
@@ -27,6 +30,7 @@
 
 (setq exec-path (cons "/usr/local/bin" exec-path))
 
+;; this is included
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "/")
