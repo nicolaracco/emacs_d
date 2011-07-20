@@ -138,6 +138,6 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
 (if
-  (file-readable-p "~/.emacs.d/local.el")
-  (load-file "~/.emacs.d/local.el")
+  (file-readable-p "~/.emacs.d/user.el")
+  (load-file "~/.emacs.d/user.el")
 )
