@@ -136,3 +136,8 @@
  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+
+(if
+  (file-readable-p "~/.emacs.d/user.el")
+  (load-file "~/.emacs.d/user.el")
+)
