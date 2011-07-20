@@ -22,8 +22,6 @@
 (custom-set-variables
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil))
-(custom-set-faces
- '(linum ((t (:family "Inconsolata")))))
 
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
@@ -79,11 +77,6 @@
         (:name inf-ruby
                :features inf-ruby
 	       :type elpa)
-        (:name linum-off
-               :type git
-               :url "https://github.com/emacsmirror/linum-off.git"
-               :features linum-off
-               :post-init (lambda() (global-linum-mode 1)))
         (:name textmate
 	       :type git
 	       :url "https://github.com/defunkt/textmate.el.git"
@@ -137,6 +130,8 @@
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
+
+;; Extra directives to keep this pristine.
 (if
   (file-readable-p "~/.emacs.d/user.el")
   (load-file "~/.emacs.d/user.el")
