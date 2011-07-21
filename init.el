@@ -55,6 +55,12 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; hack until I can make it compile via el-get
+(add-to-list 'load-path "~/.emacs.d/vendor/slime")  ; your SLIME directory
+(setq inferior-lisp-program "/usr/local/bin/ccl") ; your Lisp system
+(require 'slime)
+(slime-setup '(slime-fancy))
+
 ;; hack until I can make it work via el-get
 (require 'peepopen)
 
@@ -62,7 +68,7 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
 
-;; MOAR PACKAGES
+;; MOAR PACKAGES!!!
 ;; Add the original Emacs Lisp Package Archive
 (add-to-list 'package-archives
              '("elpa" . "http://tromey.com/elpa/"))
@@ -77,9 +83,13 @@
         (:name inf-ruby
                :features inf-ruby
 	       :type elpa)
+        (:name rhtml
+               :type git
+               :url "https://github.com/eschulte/rhtml.git"
+               :features rhtml-mode)        
         (:name textmate
-	       :type git
-	       :url "https://github.com/defunkt/textmate.el.git"
+               :type git
+               :url "https://github.com/defunkt/textmate.el.git"
                :features textmate
 	       :post-init (lambda () (textmate-mode)))))
 
@@ -92,9 +102,8 @@
 	 color-theme-solarized
          folding
 	 gist
-	 nxhtml
 	 org-mode
-	 smooth-scrolling
+         smooth-scrolling
 	 twittering-mode
 	 rainbow-mode
          rvm
@@ -118,18 +127,6 @@
 (add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
-
-;; complicated stuff for erb files
-(setq
- nxhtml-global-minor-mode t
- mumamo-chunk-coloring 'submode-colored
- nxhtml-skip-welcome t
- indent-region-mode t
- rng-nxml-auto-validate-flag nil
- nxml-degraded t)
-(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . eruby-nxhtml-mumamo-mode))
-
 
 ;; Extra directives to keep this pristine.
 (if
