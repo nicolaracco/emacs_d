@@ -95,14 +95,14 @@
 
 (setq el-get-packages
       (append
-       '(magit
+       '(;;magit
          apache-mode
 	 autopair
 	 color-theme
 	 color-theme-solarized
-         folding
+         ;;folding
 	 gist
-	 org-mode
+	 ;;org-mode
          smooth-scrolling
 	 twittering-mode
 	 rainbow-mode
@@ -118,6 +118,7 @@
 (show-paren-mode 1)
 (color-theme-solarized-light)
 (setq twittering-use-master-password t)
+(set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
 (rainbow-mode)
 (yas/global-mode)
