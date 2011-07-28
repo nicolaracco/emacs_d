@@ -21,7 +21,8 @@
 
 (custom-set-variables
  '(inhibit-startup-screen t)
- '(initial-buffer-choice nil))
+ '(initial-buffer-choice nil)
+ '(lintnode-location "~/.emacs.d/el-get/lintnode"))
 
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
@@ -91,7 +92,13 @@
                :type git
                :url "https://github.com/defunkt/textmate.el.git"
                :features textmate
-	       :post-init (lambda () (textmate-mode)))))
+	       :post-init (lambda () (textmate-mode)))
+        (:name lintnode
+               :type git
+               :url "https://github.com/nicolaracco/lintnode.git"
+               :features flymake-jslint
+               :post-init (lambda () 
+                            (add-hook 'js-mode-hook 'lintnode-hook)))))
 
 (setq el-get-packages
       (append
@@ -134,3 +141,4 @@
   (file-readable-p "~/.emacs.d/user.el")
   (load-file "~/.emacs.d/user.el")
 )
+
