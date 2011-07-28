@@ -95,15 +95,11 @@
 
 (setq el-get-packages
       (append
-       '(;;magit
-         apache-mode
-	 autopair
+       '(autopair
 	 color-theme
 	 color-theme-solarized
-         ;;folding
-	 gist
-	 ;;org-mode
-         smooth-scrolling
+         gist
+	 smooth-scrolling
 	 twittering-mode
 	 rainbow-mode
          rvm
