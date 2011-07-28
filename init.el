@@ -22,7 +22,8 @@
 (custom-set-variables
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil)
- '(lintnode-location "~/.emacs.d/el-get/lintnode"))
+ '(lintnode-location "~/.emacs.d/el-get/lintnode")
+ '(lintnode-autostart nil))
 
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
@@ -131,6 +132,9 @@
 (add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
+
+;; Start lintnode server
+(lintnode-start)
 
 ;; Extra directives to keep this pristine.
 (if
