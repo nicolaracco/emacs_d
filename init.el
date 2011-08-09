@@ -128,6 +128,7 @@
 (rainbow-mode)
 (yas/global-mode)
 (rvm-use-default)
+(delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
 (add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
 (add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
