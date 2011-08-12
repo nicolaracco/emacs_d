@@ -41,6 +41,7 @@
 (setq auto-mode-alist  (cons '("Gemfile.lock$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '("Rakefile$" . ruby-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Buildfile$" . ruby-mode))
 
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
@@ -67,6 +68,11 @@
 ;; hack until I can make it work via el-get
 (require 'peepopen)
 
+;; It doesn't have its own repo
+(require 'mustache-mode)
+(add-to-list 'auto-mode-alist '("\\.hs$" . tpl-mode))
+(add-to-list 'auto-mode-alist '("\\.handlebars$" . tpl-mode))
+
 ;; Here I start configuring it with el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
@@ -89,7 +95,13 @@
         (:name rhtml
                :type git
                :url "https://github.com/eschulte/rhtml.git"
-               :features rhtml-mode)        
+               :features rhtml-mode)
+        (:name scala-mode
+               :type svn
+               :url "http://lampsvn.epfl.ch/svn-repos/scala/scala-tool-support/trunk/src/emacs/"
+               :build ("ELISP_COMMAND=/Applications/Emacs.app/Contents/MacOS/Emacs make")
+               :load-path (".")
+               :features scala-mode-auto)        
         (:name textmate
                :type git
                :url "https://github.com/defunkt/textmate.el.git"
@@ -105,8 +117,10 @@
 (setq el-get-packages
       (append
        '(autopair
+         coffee-mode
 	 color-theme
 	 color-theme-solarized
+         color-theme-zenburn
          gist
 	 smooth-scrolling
 	 twittering-mode
@@ -121,7 +135,7 @@
 
 ;; Various after-el-get-configurations
 (show-paren-mode 1)
-(color-theme-solarized-light)
+(color-theme-zenburn)
 (setq twittering-use-master-password t)
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
@@ -134,6 +148,11 @@
 (add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
+(add-hook 'coffee-mode-hook '(lambda ()
+                               (and (file-exists-p (buffer-file-name))
+                                    (file-exists-p (coffee-compiled-file-name))
+                                    (coffee-cos-mode t))))
+(setq js-indent-level 2)
 
 ;; Start lintnode server
 (lintnode-start)
