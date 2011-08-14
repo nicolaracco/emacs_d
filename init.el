@@ -4,7 +4,6 @@
 ;;
 ;; This is the original stuff
 ;;
-
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 
 ;; this is so important that it goes here
@@ -22,13 +21,11 @@
 (custom-set-variables
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil)
- '(lintnode-location "~/.emacs.d/el-get/lintnode")
- '(lintnode-autostart nil))
+ '(coffee-tab-width 2)
+ '(c-basic-offset 2))
 
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
-
-(setq exec-path (cons "/usr/local/bin" exec-path))
 
 ;; this is included
 (require 'uniquify)
@@ -65,13 +62,45 @@
 (require 'slime)
 (slime-setup '(slime-fancy))
 
-;; hack until I can make it work via el-get
-(require 'peepopen)
-
 ;; It doesn't have its own repo
 (require 'mustache-mode)
-(add-to-list 'auto-mode-alist '("\\.hs$" . tpl-mode))
-(add-to-list 'auto-mode-alist '("\\.handlebars$" . tpl-mode))
+(add-to-list 'auto-mode-alist '("\\.hs$" . mustache-mode))
+(add-to-list 'auto-mode-alist '("\\.handlebars$" . mustache-mode))
+
+;; Apply shell environment to emacs
+(require 'cl)
+(defun env-line-to-cons (env-line)
+  "Convert a string of the form \"VAR=VAL\" to a
+cons cell containing (\"VAR\" . \"VAL\")."
+  (if (string-match "\\([^=]+\\)=\\(.*\\)" env-line)
+      (cons (match-string 1 env-line) (match-string 2 env-line))))
+
+(defun interactive-env-alist (&optional shell-cmd env-cmd)
+  "Launch /usr/bin/env or the equivalent from a login
+shell, parsing and returning the environment as an alist."
+  (let ((cmd (concat (or shell-cmd "$SHELL -lc")
+                     " "
+                     (or env-cmd "/usr/bin/env"))))
+    (mapcar 'env-line-to-cons
+            (remove-if
+             (lambda (str)
+               (string-equal str ""))
+             (split-string (shell-command-to-string cmd) "[\r\n]")))))
+
+(defun setenv-from-cons (var-val)
+  "Set an environment variable from a cons cell containing
+two strings, where the car is the variable name and cdr is
+the value, e.g. (\"VAR\" . \"VAL\")"
+  (setenv (car var-val) (cdr var-val)))
+
+(defun setenv-from-shell-environment (&optional shell-cmd env-cmd)
+  "Apply the environment reported by `/usr/bin/env' (or env-cmd)
+as launched by `$SHELL -lc' (or shell-cmd) to the current
+environment."
+  (mapc 'setenv-from-cons (interactive-env-alist shell-cmd env-cmd)))
+
+(setenv-from-shell-environment)
+(setq exec-path (split-string (getenv "PATH") path-separator))
 
 ;; Here I start configuring it with el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -89,6 +118,20 @@
       '((:name apache-mode
                :type git
                :url "https://github.com/emacsmirror/apache-mode.git")
+        (:name color-theme-zenburn
+               :type git
+               :url "https://github.com/bbatsov/zenburn-emacs.git"
+               :load ("color-theme.el" "color-theme-zenburn.el"))
+        (:name coffee-mode
+               :website "http://ozmm.org/posts/coffee_mode.html"
+               :description "Emacs Major Mode for CoffeeScript"
+               :type git
+               :url "https://github.com/kelleyk/coffee-mode.git"
+               :features coffee-mode
+               :post-init (lambda ()
+                            (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+                            (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+                            (define-key coffee-mode-map (kbd "C-x t") 'coffee-compile-buffer)))
         (:name inf-ruby
                :features inf-ruby
 	       :type elpa)
@@ -106,27 +149,20 @@
                :type git
                :url "https://github.com/defunkt/textmate.el.git"
                :features textmate
-	       :post-init (lambda () (textmate-mode)))
-        (:name lintnode
-               :type git
-               :url "https://github.com/nicolaracco/lintnode.git"
-               :features flymake-jslint
-               :post-init (lambda () 
-                            (add-hook 'js-mode-hook 'lintnode-hook)))))
+	       :post-init (lambda () (textmate-mode)))))
 
 (setq el-get-packages
       (append
        '(autopair
-         coffee-mode
-	 color-theme
-	 color-theme-solarized
-         color-theme-zenburn
          gist
+         js-comint
+         js2-mode
+	 rainbow-mode
+         rainbow-delimiters
+	 ruby-compilation
+         rvm
 	 smooth-scrolling
 	 twittering-mode
-	 rainbow-mode
-         rvm
-	 ruby-compilation
 	 yasnippet
 	 yaml-mode)
        (mapcar 'el-get-source-name el-get-sources)))
@@ -134,13 +170,16 @@
 (el-get 'sync el-get-packages)
 
 ;; Various after-el-get-configurations
-(show-paren-mode 1)
 (color-theme-zenburn)
+(show-paren-mode 1)
 (setq twittering-use-master-password t)
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
-(rainbow-mode)
-(yas/global-mode)
+(rainbow-mode 1)
+(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'slime-mode-hoom 'rainbow-delimiters-mode)
 (rvm-use-default)
 (delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
@@ -152,10 +191,8 @@
                                (and (file-exists-p (buffer-file-name))
                                     (file-exists-p (coffee-compiled-file-name))
                                     (coffee-cos-mode t))))
-(setq js-indent-level 2)
 
-;; Start lintnode server
-(lintnode-start)
+(setq inferior-js-program-command "node")
 
 ;; Extra directives to keep this pristine.
 (if
