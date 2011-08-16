@@ -126,7 +126,7 @@ environment."
                :website "http://ozmm.org/posts/coffee_mode.html"
                :description "Emacs Major Mode for CoffeeScript"
                :type git
-               :url "https://github.com/kelleyk/coffee-mode.git"
+               :url "https://github.com/intinig/coffee-mode.git"
                :features coffee-mode
                :post-init (lambda ()
                             (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
@@ -171,6 +171,8 @@ environment."
 
 ;; Various after-el-get-configurations
 (color-theme-zenburn)
+(column-number-mode)
+(ansi-color-for-comint-mode-on)
 (show-paren-mode 1)
 (setq twittering-use-master-password t)
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
