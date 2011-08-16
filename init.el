@@ -157,6 +157,7 @@ environment."
          gist
          js-comint
          js2-mode
+         org-mode
 	 rainbow-mode
          rainbow-delimiters
 	 ruby-compilation
@@ -170,6 +171,7 @@ environment."
 (el-get 'sync el-get-packages)
 
 ;; Various after-el-get-configurations
+(setq org-log-done t)
 (color-theme-zenburn)
 (column-number-mode)
 (ansi-color-for-comint-mode-on)
