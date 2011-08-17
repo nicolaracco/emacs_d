@@ -110,10 +110,7 @@ environment."
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (setq el-get-sources
-      '((:name apache-mode
-               :type git
-               :url "https://github.com/emacsmirror/apache-mode.git")
-        (:name color-theme-zenburn
+      '((:name color-theme-zenburn
                :type git
                :url "https://github.com/bbatsov/zenburn-emacs.git"
                :load ("color-theme.el" "color-theme-zenburn.el"))
@@ -127,16 +124,6 @@ environment."
                             (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
                             (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
                             (define-key coffee-mode-map (kbd "C-x t") 'coffee-compile-buffer)))
-        (:name inf-ruby
-               :features inf-ruby
-	       :type elpa)
-        (:name mustache-mode
-               :features mustache-mode
-               :type git
-               :url "https://github.com/mustache/emacs.git"
-               :post-init (lambda ()
-                            (add-to-list 'auto-mode-alist '("\\.hs$" . mustache-mode))
-                            (add-to-list 'auto-mode-alist '("\\.handlebars$" . mustache-mode))))
         (:name scala-mode
                :type svn
                :url "http://lampsvn.epfl.ch/svn-repos/scala/scala-tool-support/trunk/src/emacs/"
@@ -146,10 +133,13 @@ environment."
 
 (setq el-get-packages
       (append
-       '(autopair
+       '(apache-mode
+         autopair
          gist
+         inf-ruby
          js-comint
          js2-mode
+         mustache-mode
          org-mode
 	 rainbow-mode
          rhtml-mode
