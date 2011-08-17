@@ -62,11 +62,6 @@
 (require 'slime)
 (slime-setup '(slime-fancy))
 
-;; It doesn't have its own repo
-(require 'mustache-mode)
-(add-to-list 'auto-mode-alist '("\\.hs$" . mustache-mode))
-(add-to-list 'auto-mode-alist '("\\.handlebars$" . mustache-mode))
-
 ;; Apply shell environment to emacs
 (require 'cl)
 (defun env-line-to-cons (env-line)
@@ -135,21 +130,19 @@ environment."
         (:name inf-ruby
                :features inf-ruby
 	       :type elpa)
-        (:name rhtml
+        (:name mustache-mode
+               :features mustache-mode
                :type git
-               :url "https://github.com/eschulte/rhtml.git"
-               :features rhtml-mode)
+               :url "https://github.com/mustache/emacs.git"
+               :post-init (lambda ()
+                            (add-to-list 'auto-mode-alist '("\\.hs$" . mustache-mode))
+                            (add-to-list 'auto-mode-alist '("\\.handlebars$" . mustache-mode))))
         (:name scala-mode
                :type svn
                :url "http://lampsvn.epfl.ch/svn-repos/scala/scala-tool-support/trunk/src/emacs/"
                :build ("ELISP_COMMAND=/Applications/Emacs.app/Contents/MacOS/Emacs make")
                :load-path (".")
-               :features scala-mode-auto)        
-        (:name textmate
-               :type git
-               :url "https://github.com/defunkt/textmate.el.git"
-               :features textmate
-	       :post-init (lambda () (textmate-mode)))))
+               :features scala-mode-auto)))
 
 (setq el-get-packages
       (append
@@ -159,10 +152,11 @@ environment."
          js2-mode
          org-mode
 	 rainbow-mode
-         rainbow-delimiters
+         rhtml-mode
 	 ruby-compilation
          rvm
 	 smooth-scrolling
+         textmate
 	 twittering-mode
 	 yasnippet
 	 yaml-mode)
@@ -180,10 +174,6 @@ environment."
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
 (rainbow-mode 1)
-(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'slime-mode-hoom 'rainbow-delimiters-mode)
 (rvm-use-default)
 (delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
@@ -197,6 +187,13 @@ environment."
                                     (coffee-cos-mode t))))
 
 (setq inferior-js-program-command "node")
+(add-hook 'js2-mode-hook '(lambda () 
+			    (local-set-key "\C-x\C-e" 'js-send-last-sexp)
+			    (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
+			    (local-set-key "\C-cb" 'js-send-buffer)
+			    (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
+			    (local-set-key "\C-cl" 'js-load-file-and-go)
+			    ))
 
 ;; Extra directives to keep this pristine.
 (if
