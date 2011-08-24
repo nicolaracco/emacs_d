@@ -135,6 +135,7 @@ environment."
       (append
        '(apache-mode
          autopair
+         haml-mode
          gist
          inf-ruby
          js-comint
@@ -145,6 +146,7 @@ environment."
          rhtml-mode
 	 ruby-compilation
          rvm
+         sass-mode
 	 smooth-scrolling
          textmate
 	 twittering-mode
@@ -184,6 +186,27 @@ environment."
 			    (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
 			    (local-set-key "\C-cl" 'js-load-file-and-go)
 			    ))
+
+;; uniquify lines in a buffer
+(defun uniq-lines (beg end)
+  "Unique lines in region.
+Called from a program, there are two arguments:
+BEG and END (region to sort)."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (while (not (eobp))
+        (kill-line 1)
+        (yank)
+        (let ((next-line (point)))
+          (while
+              (re-search-forward
+               (format "^%s" (regexp-quote (car kill-ring))) nil t)
+            (replace-match "" nil nil))
+          (goto-char next-line))))))
+
 
 ;; Extra directives to keep this pristine.
 (if
