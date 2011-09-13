@@ -16,7 +16,7 @@
 (push 'fontify-frame after-make-frame-functions)
 
 ;; default window size 
-(setq default-frame-alist '((width . 105) (height . 40) ))
+(setq default-frame-alist '((width . 105) (height . 38) ))
 
 (custom-set-variables
  '(inhibit-startup-screen t)
@@ -142,6 +142,7 @@ environment."
          js2-mode
          mustache-mode
          org-mode
+         php-mode-improved
 	 rainbow-mode
          rhtml-mode
 	 ruby-compilation
@@ -168,6 +169,7 @@ environment."
 (rainbow-mode 1)
 (rvm-use-default)
 (delete-selection-mode 1)
+(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
 (add-to-list 'auto-mode-alist '("httpd\\.conf\\'"  . apache-mode))
 (add-to-list 'auto-mode-alist '("srm\\.conf\\'"    . apache-mode))
@@ -188,6 +190,7 @@ environment."
 			    ))
 
 ;; uniquify lines in a buffer
+;; thanks http://yesybl.org/blogen/?p=25
 (defun uniq-lines (beg end)
   "Unique lines in region.
 Called from a program, there are two arguments:
