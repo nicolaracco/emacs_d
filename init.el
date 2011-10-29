@@ -27,6 +27,9 @@
 ;; activates forward delete on del key
 (global-set-key [kp-delete] 'delete-char)
 
+;; remove trailing whitespaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; this is included
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
