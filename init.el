@@ -1,5 +1,5 @@
 ;; Before everything else, keep it real
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;;
 ;; This is the original stuff
@@ -15,7 +15,7 @@
 (fontify-frame nil)
 (push 'fontify-frame after-make-frame-functions)
 
-;; default window size 
+;; default window size
 (setq default-frame-alist '((width . 105) (height . 38) ))
 
 (custom-set-variables
@@ -146,7 +146,6 @@ environment."
          mustache-mode
          org-mode
          php-mode-improved
-	 rainbow-mode
          rhtml-mode
 	 ruby-compilation
          rvm
@@ -161,6 +160,8 @@ environment."
 (el-get 'sync el-get-packages)
 
 ;; Various after-el-get-configurations
+(defun hash-arrow () (interactive) (insert " => "))
+(global-set-key (kbd "C-l") 'hash-arrow)
 (setq org-log-done t)
 (color-theme-zenburn)
 (column-number-mode)
@@ -184,7 +185,7 @@ environment."
                                     (coffee-cos-mode t))))
 
 (setq inferior-js-program-command "node")
-(add-hook 'js2-mode-hook '(lambda () 
+(add-hook 'js2-mode-hook '(lambda ()
 			    (local-set-key "\C-x\C-e" 'js-send-last-sexp)
 			    (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
 			    (local-set-key "\C-cb" 'js-send-buffer)
@@ -219,4 +220,3 @@ BEG and END (region to sort)."
   (file-readable-p "~/.emacs.d/user.el")
   (load-file "~/.emacs.d/user.el")
 )
-
