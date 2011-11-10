@@ -170,7 +170,6 @@ environment."
 (setq twittering-use-master-password t)
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
-(rainbow-mode 1)
 (rvm-use-default)
 (delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
