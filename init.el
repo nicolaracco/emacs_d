@@ -200,6 +200,7 @@ environment."
 			    (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
 			    (local-set-key "\C-cl" 'js-load-file-and-go)
 			    ))
+(setq ruby-deep-indent-paren nil)
 
 ;; uniquify lines in a buffer
 ;; thanks http://yesybl.org/blogen/?p=25
