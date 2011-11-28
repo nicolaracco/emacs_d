@@ -178,6 +178,8 @@ environment."
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
 (rvm-use-default)
+(global-set-key (kbd "C-<f5>") 'linum-mode)
+(global-linum-mode t)
 (delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
