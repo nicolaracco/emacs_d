@@ -113,10 +113,7 @@ environment."
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (setq el-get-sources
-      '((:name ruby-mode
-               :type elpa
-               :load "ruby-mode.el")
-        (:name color-theme-zenburn
+      '((:name color-theme-zenburn
                :type git
                :url "https://github.com/bbatsov/zenburn-emacs.git"
                :load ("color-theme.el" "color-theme-zenburn.el"))
@@ -158,6 +155,7 @@ environment."
          php-mode-improved
          rhtml-mode
 	 ruby-compilation
+         rvm
          sass-mode
 	 smooth-scrolling
          textmate
@@ -179,6 +177,7 @@ environment."
 (setq twittering-use-master-password t)
 (set-default 'autopair-dont-activate #'(lambda () (eq major-mode 'sldb-mode)))
 (autopair-global-mode)
+(rvm-use-default)
 (delete-selection-mode 1)
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 (add-to-list 'auto-mode-alist '("\\.htaccess\\'"   . apache-mode))
