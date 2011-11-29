@@ -161,7 +161,9 @@ environment."
          textmate
 	 twittering-mode
 	 yasnippet
-	 yaml-mode)
+	 yaml-mode
+         lua-mode
+         magit)
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync el-get-packages)
