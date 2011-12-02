@@ -204,6 +204,23 @@ environment."
 			    ))
 (setq ruby-deep-indent-paren nil)
 
+;; scroll to bottom for eshell
+(defun eshell-scroll-to-bottom (window display-start)
+  (if (and window (window-live-p window))
+      (let ((resize-mini-windows nil))
+	(save-selected-window
+	  (select-window window)
+	  (save-restriction
+	    (widen)
+	    (when (> (point) eshell-last-output-start) ; we're editing a line. Scroll.
+	      (save-excursion
+		(recenter -1)
+		(sit-for 0))))))))
+(defun eshell-add-scroll-to-bottom ()
+  (interactive)
+  (add-hook 'window-scroll-functions 'eshell-scroll-to-bottom nil t))
+(add-hook 'eshell-mode-hook 'eshell-add-scroll-to-bottom)
+
 ;; uniquify lines in a buffer
 ;; thanks http://yesybl.org/blogen/?p=25
 (defun uniq-lines (beg end)
